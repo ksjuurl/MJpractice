@@ -1,4 +1,8 @@
+import datetime
+
 from django.db import models
+from django.utils import timezone
+
 
 # Create your models here.
 
@@ -9,6 +13,9 @@ class Question(models.Model):
     #모든내용표시하기
     def __str__(self):
         return self.question_text
+
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)    #  선택지에해당하는 질문
